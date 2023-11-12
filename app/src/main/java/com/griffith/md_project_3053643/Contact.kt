@@ -1,5 +1,6 @@
 package com.griffith.md_project_3053643
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -34,22 +35,28 @@ class Contact : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+            val navController = rememberNavController()
             MD_project_3053643Theme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    ContactPage()
+                    ContactPage(navController)
+
                 }
             }
         }
     }
 }
 
+@SuppressLint("UnrememberedMutableState")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun ContactPage(){
+fun ContactPage(navController: NavController){
+    var contactName = remember { mutableStateOf("") }
+    var contactPhone = remember { mutableStateOf("") }
+    var contactEmail = remember { mutableStateOf("") }
     Image(painter = painterResource(id = R.drawable.emer),
         contentDescription = "emergencyBackground",
         contentScale = ContentScale.FillBounds,
@@ -62,20 +69,26 @@ fun ContactPage(){
         style = MaterialTheme.typography.bodyLarge,
         modifier = Modifier.padding(bottom = 26.dp,top = 100.dp)
             )
-        TextField(value = "", onValueChange ={},
+        TextField(value = contactName.value,
+            onValueChange ={contactName.value = it},
             label ={ Text("Emergency Contact Name")},
             modifier = Modifier.padding(bottom = 20.dp)
         )
-        TextField(value = "", onValueChange ={},
+        TextField(value = contactPhone.value,
+            onValueChange ={contactPhone.value = it},
             label ={ Text("Emergency Contact phone")},
             modifier = Modifier.padding(bottom = 20.dp)
         )
-        TextField(value = "", onValueChange ={},
+        TextField(value = contactEmail.value,
+            onValueChange ={contactEmail.value = it},
             label ={ Text("Emergency Contact Email")},
             modifier = Modifier.padding(bottom = 20.dp)
         )
         Button(
-            onClick = {},
+            onClick = {
+                if (contactName.value != "" && contactPhone.value != "" && contactEmail.value !="") {
+                    navController.navigate("Main")
+                }},
             modifier = Modifier
                 .width(300.dp)
                 .padding(bottom = 16.dp)
