@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">MD_project_3053643</string>
     <string name="title_activity_login">Login</string>
+    <string name="title_activity_contact">Contact</string>
 </resources>
