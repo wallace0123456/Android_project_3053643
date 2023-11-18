@@ -30,6 +30,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
+import com.google.firebase.auth.FirebaseAuth
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,6 +58,8 @@ class Login : ComponentActivity() {
 fun LoginPage(navController: NavController) {
     var userName = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
+    val auth = FirebaseAuth.getInstance()
+
     Image(painter = painterResource(id = R.drawable.bg),
         contentDescription = "background",
         contentScale = ContentScale.FillBounds,
@@ -79,11 +82,19 @@ fun LoginPage(navController: NavController) {
           label={ Text("Password")},
           modifier = Modifier.padding(bottom = 20.dp)
       )
+
+        Button(onClick = { navController.navigate("Register") },
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp))
+
+        {
+            Text("Register")
+        }
       Button(
           onClick = {
-              if(userName.value == "user" && password.value == "password") {
-                  navController.navigate("Main")
-              }},
+              tryLogin(userName.value,password.value,auth,navController)
+              },
 
           modifier = Modifier
               .fillMaxWidth()
@@ -111,8 +122,21 @@ fun NavigationScreen(){
             composable("Login"){
                 LoginPage(navController)
             }
+
+            composable("Register"){
+                RegisterPage(navController)
+            }
         }
     }
 }
+private fun tryLogin(userName:String,password:String,auth:FirebaseAuth,navController: NavController){
+        auth.signInWithEmailAndPassword(userName,password)
+            .addOnCompleteListener{
+                    task->
+                if(task.isSuccessful){
+                    navController.navigate("main")
+                }
+            }
 
+}
 
