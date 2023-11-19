@@ -29,6 +29,7 @@ import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.database.FirebaseDatabase
 import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
 
 class Contact : ComponentActivity() {
@@ -57,6 +58,8 @@ fun ContactPage(navController: NavController){
     var contactName = remember { mutableStateOf("") }
     var contactPhone = remember { mutableStateOf("") }
     var contactEmail = remember { mutableStateOf("") }
+    val database = FirebaseDatabase.getInstance().reference
+
     Image(painter = painterResource(id = R.drawable.emer),
         contentDescription = "emergencyBackground",
         contentScale = ContentScale.FillBounds,
@@ -86,7 +89,13 @@ fun ContactPage(navController: NavController){
         )
         Button(
             onClick = {
-                if (contactName.value != "" && contactPhone.value != "" && contactEmail.value !="") {
+                if (contactName.value.isNotBlank() && contactPhone.value.isNotBlank() && contactEmail.value.isNotBlank()) {
+                    val contactDetails = ContactDetails(
+                        name = contactName.value,
+                        phone = contactPhone.value,
+                        email = contactEmail.value
+                    )
+                    database.child("contacts").setValue(contactDetails)
                     navController.navigate("Main")
                 }},
             modifier = Modifier
@@ -98,3 +107,9 @@ fun ContactPage(navController: NavController){
         }
     }
 }
+
+data class ContactDetails(
+    val name: String,
+    val phone: String,
+    val email: String
+)
