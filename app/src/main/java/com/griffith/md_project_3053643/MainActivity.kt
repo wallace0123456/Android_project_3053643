@@ -45,6 +45,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                //call the mainPage with navController
                 mainPage(navController)
 
                 }
@@ -54,9 +56,11 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+//main page
 @Composable
 fun mainPage(navController: NavController){
 
+    //import background of the main page
     Image(painter = painterResource(id = R.drawable.mainbg),
         contentDescription = "mainBackground",
         contentScale = ContentScale.FillBounds,
@@ -64,6 +68,7 @@ fun mainPage(navController: NavController){
     Column (
         horizontalAlignment = Alignment.CenterHorizontally
     )
+
     {
         Surface(color = Color(150,0,0)) {
             Text("Car Accident Detection App ",
@@ -77,6 +82,7 @@ fun mainPage(navController: NavController){
                 )
         }
 
+        //main page buttons use to navigate to different activities
         Button(
             onClick = { navController.navigate("Contact") },
             modifier = Modifier
@@ -87,15 +93,17 @@ fun mainPage(navController: NavController){
             Text("Contact Details")
         }
 
-
-        Button(onClick = { /*TODO*/ },
-            modifier = Modifier.padding(bottom = 16.dp, top = 20.dp).
-            width(150.dp)
+        //button to SpeedDrive activities
+        Button(onClick = { navController.navigate("SpeedDrive") },
+            modifier = Modifier
+                .padding(bottom = 16.dp, top = 20.dp)
+                .width(150.dp)
         ) {
             Text("Check Driving")
 
         }
 
+        //button to About activities
         Button(onClick = { /*TODO*/ },
             modifier = Modifier.padding(bottom = 16.dp, top = 20.dp).
             width(150.dp)
@@ -104,6 +112,7 @@ fun mainPage(navController: NavController){
 
         }
 
+        //button to Terms activities
         Button(onClick = { /*TODO*/ },
             modifier = Modifier.padding(bottom = 16.dp, top = 20.dp).
             width(150.dp)

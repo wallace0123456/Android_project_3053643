@@ -43,7 +43,10 @@ class Login : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    //call the loginPage with navController
                     LoginPage(navController)
+                    //call the function to make sure navigation works as it is the starting
+                    //activity.
                     NavigationScreen()
 
                     }
@@ -56,10 +59,13 @@ class Login : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginPage(navController: NavController) {
+    //variable for user to login
     var userName = remember { mutableStateOf("") }
     var password = remember { mutableStateOf("") }
+    //variable to work with firebase authtication
     val auth = FirebaseAuth.getInstance()
 
+    //change the background of this page
     Image(painter = painterResource(id = R.drawable.bg),
         contentDescription = "background",
         contentScale = ContentScale.FillBounds,
@@ -68,21 +74,28 @@ fun LoginPage(navController: NavController) {
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+        //title of this page
       Text(text = "Login CADA",
            style = MaterialTheme.typography.bodyLarge,
            modifier = Modifier.padding(bottom = 26.dp, top = 26.dp)
       )
+
+        //textfield for user to input their username which will be check late.
       TextField(value =userName.value ,
           onValueChange ={ userName.value = it} ,
           label = { Text("Username")},
           modifier = Modifier.padding(bottom = 20.dp)
       )
-      TextField(value = password.value,
+
+        //textfield for user to input their password which will be check late.
+        TextField(value = password.value,
           onValueChange ={password.value = it},
           label={ Text("Password")},
           modifier = Modifier.padding(bottom = 20.dp)
       )
 
+        //button that navigates user to register page to register a new account if they don't
+        //have one
         Button(onClick = { navController.navigate("Register") },
             modifier = Modifier
                 .fillMaxWidth()
@@ -91,6 +104,9 @@ fun LoginPage(navController: NavController) {
         {
             Text("Register")
         }
+
+        //button for login, when the button is click, it will start authenticate with function
+        //tryLogin with the variable user enters in the textfeild
       Button(
           onClick = {
               tryLogin(userName.value,password.value,auth,navController)
@@ -106,6 +122,9 @@ fun LoginPage(navController: NavController) {
     }
 }
 
+
+//navigation logic use for every page, add the route when a new page is add to ensure it navigates
+//to the right page.
 @Composable
 fun NavigationScreen(){
     val navController = rememberNavController()
@@ -126,9 +145,17 @@ fun NavigationScreen(){
             composable("Register"){
                 RegisterPage(navController)
             }
+
+            composable("SpeedDrive"){
+                SpeedPage(navController)
+            }
         }
     }
 }
+
+//firebase authentication, try to use the login variables above username and password to login,
+//if the username and password match with the info in firebase database, the user will be
+//navigate to the main page
 private fun tryLogin(userName:String,password:String,auth:FirebaseAuth,navController: NavController){
         auth.signInWithEmailAndPassword(userName,password)
             .addOnCompleteListener{

@@ -43,6 +43,8 @@ class Contact : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+                    //call the ContactPage with navController
                     ContactPage(navController)
 
                 }
@@ -55,11 +57,14 @@ class Contact : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactPage(navController: NavController){
+    //ready variables for user input
     var contactName = remember { mutableStateOf("") }
     var contactPhone = remember { mutableStateOf("") }
     var contactEmail = remember { mutableStateOf("") }
+    //variable use to work with firebase
     val database = FirebaseDatabase.getInstance().reference
 
+    //change the background of this page
     Image(painter = painterResource(id = R.drawable.emer),
         contentDescription = "emergencyBackground",
         contentScale = ContentScale.FillBounds,
@@ -68,34 +73,47 @@ fun ContactPage(navController: NavController){
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ){
+
         Text("Emergency Contact Details",
         style = MaterialTheme.typography.bodyLarge,
         modifier = Modifier.padding(bottom = 26.dp,top = 100.dp)
             )
+        //textfield for user to input emergency contact's name
         TextField(value = contactName.value,
             onValueChange ={contactName.value = it},
             label ={ Text("Emergency Contact Name")},
             modifier = Modifier.padding(bottom = 20.dp)
         )
+
+        //textfield for user to input emergency contact's phone when car
+        //accident happen, it will call the contact automatically
         TextField(value = contactPhone.value,
             onValueChange ={contactPhone.value = it},
             label ={ Text("Emergency Contact phone")},
             modifier = Modifier.padding(bottom = 20.dp)
         )
+
+        //textfield for user to input emergency contact's email, it will send a
+        //email to contact when accident happens.
         TextField(value = contactEmail.value,
             onValueChange ={contactEmail.value = it},
             label ={ Text("Emergency Contact Email")},
             modifier = Modifier.padding(bottom = 20.dp)
         )
+        //button uses to save emergency contact's details
         Button(
             onClick = {
+                //if statement to check if the field is blank or not
                 if (contactName.value.isNotBlank() && contactPhone.value.isNotBlank() && contactEmail.value.isNotBlank()) {
+                    //if they are not empty, get their values
                     val contactDetails = ContactDetails(
                         name = contactName.value,
                         phone = contactPhone.value,
                         email = contactEmail.value
                     )
+                    //then input them into firebase database
                     database.child("contacts").setValue(contactDetails)
+                    //and go back to main page after finish
                     navController.navigate("Main")
                 }},
             modifier = Modifier
@@ -105,9 +123,20 @@ fun ContactPage(navController: NavController){
         {
             Text("Save Emergency Contact")
         }
+
+        //button for user to navigate back to main page
+        Button(onClick = { navController.navigate("Main") },
+            modifier = Modifier
+                .width(300.dp)
+                .padding(bottom = 16.dp))
+
+        {
+            Text("Back to main")
+        }
     }
 }
 
+//data class uses for firebase database
 data class ContactDetails(
     val name: String,
     val phone: String,

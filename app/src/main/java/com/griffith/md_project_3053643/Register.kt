@@ -1,6 +1,5 @@
     package com.griffith.md_project_3053643
 
-    import android.app.ProgressDialog
     import android.content.Intent
     import android.os.Bundle
     import android.widget.Toast
@@ -23,11 +22,14 @@
     import androidx.compose.ui.Modifier
     import androidx.compose.ui.tooling.preview.Preview
     import androidx.compose.ui.unit.dp
+    import androidx.compose.ui.window.Dialog
     import androidx.navigation.NavController
     import androidx.navigation.compose.rememberNavController
     import com.google.firebase.auth.FirebaseAuth
     import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
-
+    import android.content.Context
+    import androidx.compose.runtime.MutableState
+    import androidx.compose.ui.platform.LocalContext
 
 
     class Register : ComponentActivity() {
@@ -41,6 +43,7 @@
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
+                        //call the RegisterPage with navController
                         RegisterPage(navController)
                     }
                 }
@@ -51,28 +54,37 @@
     @OptIn(ExperimentalMaterial3Api::class)
     @Composable
     fun RegisterPage(navController: NavController){
+        //variable for user to register
         var email = remember { mutableStateOf("") }
         var password = remember { mutableStateOf("") }
+        //variable to work with firebase
         val auth = FirebaseAuth.getInstance()
-
+        val errorMessage = remember { mutableStateOf("") }
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ){
-            Text(text = "Login CADA",
+            //title of this page
+            Text(text = "Register CADA account",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier.padding(bottom = 26.dp, top = 26.dp)
             )
+
+            //textfield which let user to input their desire email to create an account
             TextField(value =email.value,
                 onValueChange ={ email.value = it} ,
                 label = { Text("Email")},
                 modifier = Modifier.padding(bottom = 20.dp)
             )
+
+            //textfield for user to input their desire password
             TextField(value = password.value,
                 onValueChange ={password.value = it},
                 label={ Text("Password")},
                 modifier = Modifier.padding(bottom = 20.dp)
             )
+        //button to register, if this button is being clicked, it will run the function goAuth to
+            //create new user with its email and password
             Button(
                 onClick = {
                           goAuth(email.value,password.value,auth,navController)
@@ -88,15 +100,20 @@
         }
     }
 
-    private fun goAuth(email:String ,password:String,auth:FirebaseAuth,navController: NavController){
+    private fun goAuth(email:String ,password:String,auth:FirebaseAuth,navController: NavController
+    ){
+        //if the firebase is successfully create the account with user's email and password,
+        //it will bring the user to the mainPage.
         auth.createUserWithEmailAndPassword(email,password)
             .addOnCompleteListener{
             task-> if(task.isSuccessful){
+
                 navController.navigate("main")
 
         }
             else{
 
-        }
+            }
         }
     }
+
