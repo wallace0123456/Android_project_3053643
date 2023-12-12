@@ -1,0 +1,84 @@
+<!-- activity_about.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="19dp"
+    android:background="@drawable/about"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Terms and Conditions"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:text="Welcome to our app! These terms and conditions outline the rules and regulations for the use of our mobile application.
+
+By accessing and using our app, we assume you accept these terms and conditions in full. Do not continue to use our app if you do not agree with all the terms and conditions stated on this page.
+The following terminology applies to these Terms and Conditions, Privacy Statement, and Disclaimer Notice and any or all Agreements: User, You, and Your refers to you, the person accessing this app and accepting the company's terms and conditions. The Company, Ourselves, We,
+ Our, and Us refers to our company. Party, Parties, or Us refers to both the User and ourselves, or either the User or ourselves."/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="License
+Unless otherwise stated, we and/or our licensors own the intellectual property rights for all material on this app. All intellectual property rights are reserved. You may view and/or print pages from the app for your own personal use, subject to restrictions set in these terms and conditions.
+"
+        android:textSize="15dp"
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "You must not:"
+    />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "1.Republish material from this app."
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "2.Sell, rent, or sub-license material from this app."
+
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "3.Reproduce, duplicate, or copy material from this app."
+        />
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text= "4.Redistribute content from this app."
+        />
+    <Button
+        android:id="@+id/contact_us"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Contact us"/>
+    <Button
+        android:id="@+id/back_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Back to main"/>
+
+
+
+</LinearLayout>
