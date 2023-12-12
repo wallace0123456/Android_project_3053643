@@ -47,9 +47,11 @@ class SpeedDrive : ComponentActivity() {
     private lateinit var locationText: TextView // Declare the variable as a property
     var lat = 0.0
     var long = 0.0
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        //implemented accelerometer sensor
         val sensorManager: SensorManager =
             getSystemService(Context.SENSOR_SERVICE) as SensorManager
         val accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
@@ -59,16 +61,24 @@ class SpeedDrive : ComponentActivity() {
             SensorManager.SENSOR_DELAY_NORMAL
         )
 
-
+        //set layout view
         setContentView(R.layout.speed_layout)
+
+        //created variable for GPS use
         fusedLocationProviderClinet = LocationServices.getFusedLocationProviderClient(this)
+
+        //when button is clicked, call checkLocationPermission function
         findViewById<Button>(R.id.button_get_lo).setOnClickListener {
             checkLocationPermission()
         }
+
+        //when button is clicked, call checkLocationPermission function
         findViewById<Button>(R.id.back_main).setOnClickListener {
             val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
         }
+
+        //Find text by view id
         locationText = findViewById<TextView>(R.id.text_location)
         speedText = findViewById<TextView>(R.id.text_speed)
 
