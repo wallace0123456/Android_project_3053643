@@ -70,9 +70,10 @@ class Warning : ComponentActivity() {
                 if (!countdownFinished) {
                     Toast.makeText(
                         applicationContext,
-                        "Call 911",
+                        "${email}",
                         Toast.LENGTH_SHORT
                     ).show()
+                    sendEmergencyEmail(email,name,latitude,longitude)
             }
         }}
 
@@ -89,6 +90,28 @@ class Warning : ComponentActivity() {
 
     }
 
+    // Function to send the email
+    fun sendEmergencyEmail(email: String, name: String, latitude: Double, longitude: Double) {
+        val intent = Intent(Intent.ACTION_SEND).apply {
+            type = "text/plain"
+            putExtra(Intent.EXTRA_EMAIL, arrayOf(email))
+            putExtra(Intent.EXTRA_SUBJECT, "Urgent!! Car Crash happened!")
+            putExtra(
+                Intent.EXTRA_TEXT,
+                "Mr.$name, your acquaintance has been involved " +
+                        "in a car crash at location: $latitude, $longitude"
+            )
+        }
+        // Set the intent flags to ensure it is sent without user interaction
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+        intent.addFlags(Intent.FLAG_FROM_BACKGROUND)
+
+        if (intent.resolveActivity(packageManager) != null) {
+            startActivity(intent)
+        }
+    }
     //retrieve emergency details from database for later use
     private fun retrieveContactDetails() {
         database.addListenerForSingleValueEvent(object : ValueEventListener {
