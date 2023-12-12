@@ -1,0 +1,43 @@
+<!-- activity_about.xml -->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="19dp"
+    android:background="@drawable/about"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="About Our Car Accident Detection App"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="16dp"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:text="Our car accident detection app is designed to enhance your safety on the road. By utilizing the sensors in your device, it monitors for sudden changes in acceleration that may indicate a car accident. In the event of an accident, the app will automatically notify emergency services and your designated emergency contacts, providing them with your location and relevant details.
+"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="We are committed to your safety and privacy. Rest assured that your personal information and location data are securely handled and shared only with authorized emergency services when an accident occurs."
+        android:textSize="18dp"
+        />
+    <Button
+        android:id="@+id/back_main"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="Back to main"/>
+</LinearLayout>
