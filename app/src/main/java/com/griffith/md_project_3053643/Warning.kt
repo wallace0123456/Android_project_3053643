@@ -16,18 +16,34 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
 
 class Warning : ComponentActivity() {
     private lateinit var countdownTimer: CountDownTimer
     private lateinit var countdownTextView: TextView
     private var countdownFinished = false
+    private lateinit var database: DatabaseReference
+    private var name = ""
+    private var phone = ""
+    private var email = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.warn_layout)
         //receive location from speedDrive page
         val latitude = intent.getDoubleExtra("latitude",0.0)
         val longitude = intent.getDoubleExtra("longitude",0.0)
+
+        // Initialize the Firebase Realtime Database reference
+        database = FirebaseDatabase.getInstance().getReference().child("contacts")
+        // Retrieve the contact details from the database
+        retrieveContactDetails()
+
 
         //for debug
 /*        Toast.makeText(
@@ -49,7 +65,8 @@ class Warning : ComponentActivity() {
             }
             override fun onFinish() {
                 countdownTextView.text = "0"
-                // Timer finished, perform any actions you need here
+                // Timer finished, meaning accident happened because user didn't
+                //press I'm Okay button
                 if (!countdownFinished) {
                     Toast.makeText(
                         applicationContext,
@@ -72,7 +89,26 @@ class Warning : ComponentActivity() {
 
     }
 
-}
+    //retrieve emergency details from database for later use
+    private fun retrieveContactDetails() {
+        database.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    email  = snapshot.child("email").getValue().toString()
+                    name = snapshot.child("name").getValue().toString()
+                    phone = snapshot.child("phone").getValue().toString()
+                }}
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })}}
+
+
+
+
+
+
 
 
 
