@@ -28,8 +28,11 @@
     import com.google.firebase.auth.FirebaseAuth
     import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
     import android.content.Context
+    import androidx.compose.foundation.Image
     import androidx.compose.runtime.MutableState
+    import androidx.compose.ui.layout.ContentScale
     import androidx.compose.ui.platform.LocalContext
+    import androidx.compose.ui.res.painterResource
 
 
     class Register : ComponentActivity() {
@@ -60,6 +63,12 @@
         //variable to work with firebase
         val auth = FirebaseAuth.getInstance()
         val errorMessage = remember { mutableStateOf("") }
+        //change the background of this page
+        Image(painter = painterResource(id = R.drawable.bgres),
+            contentDescription = "background",
+            contentScale = ContentScale.FillBounds,
+        )
+
         Column(
             modifier = Modifier.fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
@@ -96,6 +105,16 @@
             )
             {
                 Text("Register")
+            }
+
+            //a button to return to login page
+            Button(onClick = { navController.navigate("Login") },
+                modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp))
+            {
+                Text("Back to login")
+
             }
         }
     }

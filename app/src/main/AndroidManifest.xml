@@ -2,7 +2,17 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-feature
+        android:name="android.hardware.telephony"
+        android:required="false" />
+
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCELEROMETER" />
+    <uses-permission android:name="android.permission.SEND_EMAIL" />
+    <uses-permission android:name="android.permission.SEND_SMS" />
+
 
     <application
         android:allowBackup="true"
@@ -15,6 +25,16 @@
         android:theme="@style/Theme.MD_project_3053643"
         tools:targetApi="31">
         <activity
+            android:name=".Warning"
+            android:exported="false"
+            android:label="Warning"
+            android:theme="@style/Theme.MD_project_3053643" />
+        <activity
+            android:name=".SpeedDrive"
+            android:exported="false"
+            android:label="SpeedDrive"
+            android:theme="@style/Theme.MD_project_3053643" />
+        <activity
             android:name=".Register"
             android:exported="false"
             android:label="Register"
@@ -23,7 +43,7 @@
             android:name=".Contact"
             android:exported="true"
             android:label="Contact"
-            android:theme="@style/Theme.MD_project_3053643"></activity>
+            android:theme="@style/Theme.MD_project_3053643" />
         <activity
             android:name=".Login"
             android:exported="true"
@@ -39,7 +59,7 @@
             android:name=".MainActivity"
             android:exported="true"
             android:label="Main"
-            android:theme="@style/Theme.MD_project_3053643"></activity>
+            android:theme="@style/Theme.MD_project_3053643" />
     </application>
 
 </manifest>

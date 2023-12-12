@@ -23,6 +23,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -57,6 +58,8 @@ class Contact : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun ContactPage(navController: NavController){
+    val context = LocalContext.current
+
     //ready variables for user input
     var contactName = remember { mutableStateOf("") }
     var contactPhone = remember { mutableStateOf("") }
@@ -107,9 +110,9 @@ fun ContactPage(navController: NavController){
                 if (contactName.value.isNotBlank() && contactPhone.value.isNotBlank() && contactEmail.value.isNotBlank()) {
                     //if they are not empty, get their values
                     val contactDetails = ContactDetails(
+                        email = contactEmail.value,
                         name = contactName.value,
-                        phone = contactPhone.value,
-                        email = contactEmail.value
+                        phone = contactPhone.value
                     )
                     //then input them into firebase database
                     database.child("contacts").setValue(contactDetails)
@@ -125,7 +128,9 @@ fun ContactPage(navController: NavController){
         }
 
         //button for user to navigate back to main page
-        Button(onClick = { navController.navigate("Main") },
+        Button(onClick = {
+            val intent = Intent(context, MainActivity::class.java)
+            context.startActivity(intent) },
             modifier = Modifier
                 .width(300.dp)
                 .padding(bottom = 16.dp))
@@ -138,7 +143,7 @@ fun ContactPage(navController: NavController){
 
 //data class uses for firebase database
 data class ContactDetails(
+    val email: String,
     val name: String,
-    val phone: String,
-    val email: String
+    val phone: String
 )

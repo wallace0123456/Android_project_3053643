@@ -1,6 +1,7 @@
 package com.griffith.md_project_3053643
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
@@ -68,11 +69,6 @@ class Warning : ComponentActivity() {
                 // Timer finished, meaning accident happened because user didn't
                 //press I'm Okay button
                 if (!countdownFinished) {
-                    Toast.makeText(
-                        applicationContext,
-                        "${email}",
-                        Toast.LENGTH_SHORT
-                    ).show()
                     sendEmergencyEmail(email,name,latitude,longitude)
             }
         }}

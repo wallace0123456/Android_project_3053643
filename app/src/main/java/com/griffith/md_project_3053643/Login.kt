@@ -1,6 +1,6 @@
 package com.griffith.md_project_3053643
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -22,15 +22,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
 import com.google.firebase.auth.FirebaseAuth
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 
 class Login : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -125,6 +125,7 @@ fun LoginPage(navController: NavController) {
 
 //navigation logic use for every page, add the route when a new page is add to ensure it navigates
 //to the right page.
+@SuppressLint("UnrememberedMutableState")
 @Composable
 fun NavigationScreen(){
     val navController = rememberNavController()
@@ -146,9 +147,6 @@ fun NavigationScreen(){
                 RegisterPage(navController)
             }
 
-            composable("SpeedDrive"){
-                SpeedPage(navController)
-            }
         }
     }
 }
