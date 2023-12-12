@@ -121,7 +121,8 @@ fun mainPage(navController: NavController) {
 
         //button to About activities
         Button(
-            onClick = { /*TODO*/ },
+            onClick = {  val intent = Intent(context, About::class.java)
+                context.startActivity(intent) },
             modifier = Modifier.padding(bottom = 16.dp, top = 50.dp)
                 .width(300.dp)
                 .height(50.dp)
@@ -132,7 +133,8 @@ fun mainPage(navController: NavController) {
 
         //button to Terms activities
         Button(
-            onClick = { /*TODO*/ },
+            onClick = { val intent = Intent(context, Terms::class.java)
+                context.startActivity(intent) },
             modifier = Modifier.padding(bottom = 16.dp, top = 50.dp)
                 .width(300.dp)
                 .height(50.dp)
