@@ -45,6 +45,8 @@ class SpeedDrive : ComponentActivity() {
     lateinit var fusedLocationProviderClinet: FusedLocationProviderClient
     private lateinit var speedText:TextView
     private lateinit var locationText: TextView // Declare the variable as a property
+    var lat = 0.0
+    var long = 0.0
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -91,7 +93,13 @@ class SpeedDrive : ComponentActivity() {
                 val latitude = it.latitude
                 val longitude = it.longitude
                 locationText.text =
-                    "Current Location: $latitude $longitude" // Update the locationText
+                    "Location: $latitude,$longitude" // Update the locationText
+
+                //save lat and long for passing to other class later
+               lat = it.latitude
+                long = it.longitude
+
+                //using toast to debug
                 Toast.makeText(
                     applicationContext,
                     "${it.latitude} ${it.longitude}",
@@ -112,8 +120,14 @@ class SpeedDrive : ComponentActivity() {
                 speedText.text= "Accelerometer: $x"
                 val deceleration = Math.abs(x)
                 val threshold = 7.0 //threshold value can be adjusted
+
+                //when sudden stop detected, warning page pops up and location will be collected
+                //and send to the warning page for future use.
                 if(deceleration > threshold){
-                    val intent = Intent(this@SpeedDrive, MainActivity::class.java)
+                    val intent = Intent(this@SpeedDrive, Warning::class.java).apply {
+                        putExtra("latitude", lat)
+                        putExtra("longitude", long)
+                    }
                     startActivity(intent)
                 }
             }

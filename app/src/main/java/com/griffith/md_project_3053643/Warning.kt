@@ -25,6 +25,18 @@ class Warning : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.warn_layout)
+        //receive location from speedDrive page
+        val latitude = intent.getDoubleExtra("latitude",0.0)
+        val longitude = intent.getDoubleExtra("longitude",0.0)
+
+        //for debug
+/*        Toast.makeText(
+            applicationContext,
+            "${latitude} ${longitude}",
+            Toast.LENGTH_SHORT
+        ).show()*/
+
+
         countdownTextView = findViewById(R.id.countdownTextView)
         val buttonOk: Button = findViewById(R.id.button_ok)
 
