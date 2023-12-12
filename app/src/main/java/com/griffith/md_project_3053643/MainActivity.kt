@@ -1,5 +1,7 @@
 package com.griffith.md_project_3053643
 
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.service.controls.templates.TemperatureControlTemplate
 import androidx.activity.ComponentActivity
@@ -24,16 +26,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.layout
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.core.content.ContextCompat.startActivity
 import androidx.navigation.NavController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
-
+import androidx.compose.ui.platform.LocalContext
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,20 +62,26 @@ class MainActivity : ComponentActivity() {
 
 //main page
 @Composable
-fun mainPage(navController: NavController){
-
+fun mainPage(navController: NavController) {
+    val context = LocalContext.current
     //import background of the main page
-    Image(painter = painterResource(id = R.drawable.mainbg),
+    Image(
+        painter = painterResource(id = R.drawable.mainbg),
         contentDescription = "mainBackground",
         contentScale = ContentScale.FillBounds,
+        modifier = Modifier.fillMaxSize()
+
     )
-    Column (
-        horizontalAlignment = Alignment.CenterHorizontally
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()
+
     )
 
     {
-        Surface(color = Color(150,0,0)) {
-            Text("Car Accident Detection App ",
+        Surface(color = Color(150, 0, 0)) {
+            Text(
+                "Car Accident Detection App ",
                 style = MaterialTheme.typography.bodyLarge,
                 modifier = Modifier
                     .padding(bottom = 26.dp, top = 26.dp)
@@ -79,43 +89,54 @@ fun mainPage(navController: NavController){
                     .offset(x = 85.dp),
                 color = Color.White
 
-                )
+            )
         }
 
-        //main page buttons use to navigate to different activities
+        //main page buttons use to intent to different activities
         Button(
-            onClick = { navController.navigate("Contact") },
+            onClick = { val intent = Intent(context, Contact::class.java)
+                context.startActivity(intent) },
             modifier = Modifier
-                .padding(bottom = 16.dp, top = 20.dp)
-                .width(150.dp)
+                .padding(bottom = 16.dp, top = 50.dp)
+                .width(300.dp)
+                .height(50.dp)
         )
         {
             Text("Contact Details")
         }
 
-        //button to SpeedDrive activities
-        Button(onClick = { navController.navigate("SpeedDrive") },
+        //button to intent to SpeedDrive activities
+        Button(
+            onClick = {
+                val intent = Intent(context, SpeedDrive::class.java)
+                context.startActivity(intent)},
             modifier = Modifier
-                .padding(bottom = 16.dp, top = 20.dp)
-                .width(150.dp)
+                .padding(bottom = 16.dp, top = 50.dp)
+                .width(300.dp)
+                .height(50.dp)
         ) {
             Text("Check Driving")
 
         }
 
         //button to About activities
-        Button(onClick = { /*TODO*/ },
-            modifier = Modifier.padding(bottom = 16.dp, top = 20.dp).
-            width(150.dp)
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.padding(bottom = 16.dp, top = 50.dp)
+                .width(300.dp)
+                .height(50.dp)
         ) {
             Text("About")
 
         }
 
         //button to Terms activities
-        Button(onClick = { /*TODO*/ },
-            modifier = Modifier.padding(bottom = 16.dp, top = 20.dp).
-            width(150.dp)
+        Button(
+            onClick = { /*TODO*/ },
+            modifier = Modifier.padding(bottom = 16.dp, top = 50.dp)
+                .width(300.dp)
+                .height(50.dp)
+
         ) {
             Text("Terms")
 
@@ -123,6 +144,7 @@ fun mainPage(navController: NavController){
 
     }
 }
+
 
 
 
