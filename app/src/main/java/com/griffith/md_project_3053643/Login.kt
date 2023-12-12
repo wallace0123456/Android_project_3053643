@@ -94,17 +94,6 @@ fun LoginPage(navController: NavController) {
           modifier = Modifier.padding(bottom = 20.dp)
       )
 
-        //button that navigates user to register page to register a new account if they don't
-        //have one
-        Button(onClick = { navController.navigate("Register") },
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(bottom = 16.dp))
-
-        {
-            Text("Register")
-        }
-
         //button for login, when the button is click, it will start authenticate with function
         //tryLogin with the variable user enters in the textfeild
       Button(
@@ -119,6 +108,21 @@ fun LoginPage(navController: NavController) {
       {
           Text("Login")
       }
+
+        //button for register, when the button is clicked, it will bring users to register page
+        Button(
+            onClick = {
+                navController.navigate("Register")
+            },
+
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(bottom = 16.dp)
+        )
+        {
+            Text("Register")
+        }
+
     }
 }
 
