@@ -48,6 +48,13 @@
             android:layout_marginTop="20dp"
             android:text="I'm okay" />
 
+        <Button
+            android:id="@+id/call"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_marginTop="20dp"
+            android:text="Call 911" />
+
 
     </LinearLayout>
 </LinearLayout>

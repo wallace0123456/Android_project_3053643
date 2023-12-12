@@ -5,24 +5,14 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.CountDownTimer
 import android.widget.Button
-import android.widget.ProgressBar
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.griffith.md_project_3053643.ui.theme.MD_project_3053643Theme
 
 class Warning : ComponentActivity() {
     private lateinit var countdownTimer: CountDownTimer
@@ -53,10 +43,12 @@ class Warning : ComponentActivity() {
             Toast.LENGTH_SHORT
         ).show()*/
 
-
+        //find button and view in xml by id
         countdownTextView = findViewById(R.id.countdownTextView)
         val buttonOk: Button = findViewById(R.id.button_ok)
+        val buttonCall: Button = findViewById(R.id.call)
 
+        //implemented countdown timer
         countdownTimer = object : CountDownTimer(10000, 1000) {
             override fun onTick(millisUntilFinished: Long) {
                 if (!countdownFinished) {
@@ -67,7 +59,7 @@ class Warning : ComponentActivity() {
             override fun onFinish() {
                 countdownTextView.text = "0"
                 // Timer finished, meaning accident happened because user didn't
-                //press I'm Okay button
+                //press I'm Okay button, it will navigate user to send an emergency email to emergency contact
                 if (!countdownFinished) {
                     sendEmergencyEmail(email,name,latitude,longitude)
             }
@@ -76,6 +68,7 @@ class Warning : ComponentActivity() {
         // Start the countdown timer
         countdownTimer.start()
 
+        //when this button is clicked, stop the timer and bring the user back to main activity
         buttonOk.setOnClickListener {
             countdownFinished = true
             countdownTextView.text = "Stopped"
@@ -83,6 +76,16 @@ class Warning : ComponentActivity() {
             val intent = Intent(this@Warning, MainActivity::class.java)
             startActivity(intent)
         }
+
+        //when this button is clicked, navigate user to phone call to dial 911
+        buttonCall.setOnClickListener {
+            val phoneNumber = "911"
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$phoneNumber")
+            }
+            startActivity(intent)
+        }
+
 
     }
 
@@ -108,6 +111,8 @@ class Warning : ComponentActivity() {
             startActivity(intent)
         }
     }
+
+
     //retrieve emergency details from database for later use
     private fun retrieveContactDetails() {
         database.addListenerForSingleValueEvent(object : ValueEventListener {
