@@ -11,22 +11,26 @@
         android:id="@+id/text_location"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25dp"
         android:text="Location: " />
+
     <TextView
         android:id="@+id/text_speed"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Speed: " />
+        android:text="Speed: "
+        android:textSize="25sp" />
+
     <Button
         android:id="@+id/button_get_lo"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Get location:"
         />
     <Button
         android:id="@+id/back_main"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="20dp"
         android:text="Back to main"/>

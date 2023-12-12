@@ -2,4 +2,9 @@
     <string name="app_name">MD_project_3053643</string>
     <string name="title_activity_login">Login</string>
     <string name="title_activity_contact">Contact</string>
+    <string name="title_activity_register">Register</string>
+    <string name="title_activity_spped">Spped</string>
+    <string name="title_activity_speed">Speed</string>
+    <string name="title_activity_speed_drive">SpeedDrive</string>
+    <string name="title_activity_warning">Warning</string>
 </resources>
